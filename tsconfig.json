@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "outDir": "dist",
+        "types": [
+					"node",
+					"mocha",
+					"chai"
+				],
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+		"sourceMap": true
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
