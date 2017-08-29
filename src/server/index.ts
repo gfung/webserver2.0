@@ -103,23 +103,23 @@ const io = socketIO(server);
 // Configure Socket channels
 // Multiplexing single channel
 // chat channel
-// var chat1 = io
-// 	.of('/chat')
-// 	.on('connection', (socket)=>{
-// 		// chat1.emit('a message', "hi")
-// 		socketRoutes.chatRoutes(io,socket);
-// 		// socket.on("a message", (msg)=>{
-// 		// 	console.log(msg)
-// 		// })
-// 		socket.on("disconnect", (data)=>{
-// 			console.log("disconnected1")
-// 		})
-// 	})
-
-// main channel
-io.on('connection', (socket) => {
-	socketRoutes.chatRoutes(io, socket);
+var chat = io.of('/chat')
+chat.on('connection', function(){
+	// chat.emit('chat msg', "hi")
+	socketRoutes.chatRoutes(io, chat);
 })
+
+// battle channel
+var battle = io
+	.of('/battle')
+	.on('connection', (socket)=>{
+		socketRoutes.battleRoutes(io, battle);
+	})
+
+// // main channel
+// io.on('connection', (socket) => {
+// 	socketRoutes.socketRoutes(io, socket);
+// })
 
 //set port
 App.set('port', port);
