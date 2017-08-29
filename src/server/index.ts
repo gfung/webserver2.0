@@ -8,8 +8,7 @@ import * as fs from 'fs';
 import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 import * as socketIO from 'socket.io';
-import * as socketRoutes from './socketRoutes';
-
+import * as socketRoutes from './routing/sockets/socketRoutes';
 /**
  *  vars
  */
@@ -36,7 +35,7 @@ const options = {
 		}
 	}
 }
-const port = normalizePort(process.env.PORT || 8443);
+const port = normalizePort(process.env.PORT || 8080);
 const server = spdy.createServer(options, App);
 
 /**
@@ -94,14 +93,13 @@ function onListening(): void {
  */
 
 //Connect to Mongo
-mongoose.connect('mongodb://localhost/http2test');
+mongoose.connect('mongodb://localhost/http2test', { useMongoClient: true });
 mongoose.connection.on('error', function () {
 	console.error('Could not connect to MongoDB');
 });
 
-// set socketio
+// setup socket on server.
 const io = socketIO(server);
-
 // Configure Socket channels
 // Multiplexing single channel
 // chat channel
@@ -119,10 +117,9 @@ const io = socketIO(server);
 // 	})
 
 // main channel
-io.on('connection', (socket)=>{
-	socketRoutes.chatRoutes(io,socket);
+io.on('connection', (socket) => {
+	socketRoutes.chatRoutes(io, socket);
 })
-
 
 //set port
 App.set('port', port);
