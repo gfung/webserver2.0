@@ -9,7 +9,7 @@ router.route('/')
 			return next();
 		})
 		.get((req,res,next)=>{
-			return res.sendFile(path.join(__dirname, '../../../../public/home.html'));
+			return res.sendFile(path.join(__dirname, '../../../../client/public/home.html'));
 		})
 	// .post()
 	// .put()

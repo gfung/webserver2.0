@@ -44,7 +44,7 @@
   },
   "scripts": {
     "start": "node ./dist/server/index.js",
-    "test": "mocha --reporter spec --compilers ts:ts-node/register 'test/**/*.test.ts'"
+    "test": "mocha --reporter spec --compilers ts:ts-node/register 'src/test/**/*.test.ts'"
   },
   "author": "George",
   "license": "ISC"
