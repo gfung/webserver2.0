@@ -1,1 +1,69 @@
-<h1>hello Home</h1>
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Socket.IO Chat Example</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<button type="button" onclick="chatToggle('worldChat')">World Connect/Disconnect</button>
+	<button type="button" onclick="chatToggle('partyChat')">Party Connect/Disconnect</button>
+	<ul class="pages">
+		<li class="chat page">
+			<div class="chatArea">
+				<ul class="messages"></ul>
+			</div>
+			<input class="inputMessage" placeholder="Type here..." />
+		</li>
+	</ul>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+</body>
+
+</html>
+
+<script>
+	let connects = [];
+	let party; // empty var that we'll declare our socket connection into
+	let pflag = {};
+	function chatToggle(channel) {
+
+		console.log(pflag, pflag[channel])
+
+		if(!pflag[channel]){
+			pflag[channel] = false;
+		}
+
+		if (pflag[channel]) {
+			pflag[channel] = false;
+			// close socket
+			party.close("/"+channel)
+			$('.messages').append('<li>Closed Connection</li>')
+		} else {
+			pflag[channel] = true;
+			// open socket
+			party = io.connect("/"+channel)
+			// party.on('connect', function (socket) {})
+			party.on('chat msg', function (msg) {
+				$('.messages').append('<li>' + msg + '</li>')
+			})
+		}
+	}
+
+	// jquery detect input
+	$('input').keydown((e) => {
+		if (e.keyCode == 13) {
+			if(party){
+				console.log(party)
+				if(party.connected){
+					party.emit('chat msg', $('input').val())
+				}
+			}
+		}
+	})
+
+</script>

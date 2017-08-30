@@ -8,7 +8,7 @@ import * as fs from 'fs';
 import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 import * as socketIO from 'socket.io';
-import * as socketRoutes from './routing/sockets/socketRoutes';
+const socketRoutes = require('./routing/sockets/socketRoutes');
 /**
  *  vars
  */
@@ -99,27 +99,7 @@ mongoose.connection.on('error', function () {
 });
 
 // setup socket on server.
-const io = socketIO(server);
-// Configure Socket channels
-// Multiplexing single channel
-// chat channel
-var chat = io.of('/chat')
-chat.on('connection', function(){
-	// chat.emit('chat msg', "hi")
-	socketRoutes.chatRoutes(io, chat);
-})
-
-// battle channel
-var battle = io
-	.of('/battle')
-	.on('connection', (socket)=>{
-		socketRoutes.battleRoutes(io, battle);
-	})
-
-// // main channel
-// io.on('connection', (socket) => {
-// 	socketRoutes.socketRoutes(io, socket);
-// })
+socketRoutes.make(server)
 
 //set port
 App.set('port', port);

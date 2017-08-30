@@ -1,31 +1,18 @@
 import * as fs from 'fs';
+import * as socketIO from 'socket.io';
+const route1 = require('./socketOne')
 
-export function chatRoutes(io, namspa) {
-	namspa.emit('chat msg', "hi")
-
-	namspa.on('chat msg', (message)=>{
-		console.log(message, 'io and namspa')
-
-		namspa.emit('a message', message)
-
-	})
-
-	namspa.on('disconnect', (message)=>{
-		console.log("user disconnected")
-	})
-
-}
-
-export function battleRoutes(io, namspa) {
-	namspa.emit("battle msg","boo!")
-
-	// shit don't work
-	// data.on('battle msg', (message)=>{
-	// 	io.emit('a message', message)
-	// })
-
-	// data.on('disconnect', (message)=>{
-	// 	console.log("user disconnected")
-	// })
-
+exports.make = (serv)=>{
+	let io = socketIO(serv);
+	// multiplexing channel
+	let channels = [ io.of('/worldChat') ]
+	// var wChat = io.of('/worldChat');
+	// var lChat = io.of('/localChat');
+	// var bChat = io.of('/battleChat');
+	// var pChat = io.of('/partyChat');
+	for (let i = 0;i < channels.length;i++){
+		route1.onConnect(channels[i])
+	}
+	// route1.onConnect(wChat)
+	// route1.onConnect(pChat)
 }
