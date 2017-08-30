@@ -63,8 +63,10 @@ class App {
 			xssProtection: true
 			// angular:true
 		}))
-		// this.expressModule.use(express.static('public'))
+		console.log(path.join(__dirname,'public'))
+		this.expressModule.use(express.static(path.join(__dirname,'public')))
 		// this.express.use(cors(options));
+
 
 	}
 
@@ -74,15 +76,19 @@ class App {
 		let router = express.Router();
 		// read for backend modules and their routes
 		let readdir = fs.readdirSync(path.join(__dirname, 'routing/rest'))
-		for (var i = 0;i < readdir.length;i++){
+		for (var i = 0; i < readdir.length; i++) {
 			// test if it is a directory
-			let test = fs.lstatSync(path.join(__dirname+'/routing/rest', readdir[i])).isDirectory()
+			let test = fs.lstatSync(path.join(__dirname + '/routing/rest', readdir[i])).isDirectory()
 			// if true, then add to router module
-			if (test){
+			if (test) {
 				// add sub routes to main app
-				router.use('/'+readdir[i],require( './routing/rest/'+readdir[i] ))
+				router.use('/' + readdir[i], require('./routing/rest/' + readdir[i]))
 			}
 		}
+
+		router.get('/', (req, res, next) => {
+			res.status(200).sendFile(path.join(__dirname,'public/index.html'))
+		})
 
 		// all other routes not designated
 		router.get('*', (req, res, next) => {

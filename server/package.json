@@ -43,7 +43,7 @@
     "typescript": "^2.2.2"
   },
   "scripts": {
-    "start": "tsc;node ./dist/server/index.js",
+    "start": "clear;tsc;node ../dist/server/index.js",
     "test": "mocha --reporter spec --compilers ts:ts-node/register 'src/test/**/*.test.ts'"
   },
   "author": "George",

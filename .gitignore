@@ -1,6 +1,8 @@
-node_modules/
-dist/
-config/
-.editorconfig
-yarn.lock
 .vscode/
+config/
+dist/
+
+server/.editorconfig
+server/node_modules/
+server/nodemon.json
+server/yarn.lock
