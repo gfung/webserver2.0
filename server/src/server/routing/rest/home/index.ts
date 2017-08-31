@@ -8,9 +8,9 @@ router.route('/')
 		.all((req,res,next)=>{
 			return next();
 		})
-		.get((req,res,next)=>{
-			return res.sendFile(path.join(__dirname, '../../../public/home.html'));
-		})
+		// .get((req,res,next)=>{
+
+		// })
 	// .post()
 	// .put()
 	// .delete()
