@@ -14,8 +14,6 @@ import * as path from 'path';
 /**
  * var definitions
  */
-//mongo sessions
-// let mongoSession = mongoStore(session);
 
 class App {
 	// ref to Express instance
