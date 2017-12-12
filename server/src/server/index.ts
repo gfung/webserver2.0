@@ -36,8 +36,7 @@ const options = {
 	}
 }
 const port = normalizePort(process.env.PORT || 8080);
-const server = spdy.createServer(options, App);
-
+// const server = spdy.createServer(options, App);
 /**
  * functions
  */
@@ -83,9 +82,7 @@ function onError(error: NodeJS.ErrnoException): void {
  * @param {null} none
  */
 function onListening(): void {
-	let addr = server.address();
-	let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
-	console.log(`Listening on %s`, bind);
+	console.log(`Listening on %s`, port);
 }
 
 /**
@@ -95,7 +92,7 @@ function onListening(): void {
 //set port
 App.set('port', port);
 
-server.listen(port, (error) => {
+App.listen(port, (error) => {
 	if (error) {
 		onError(error);
 	} else {
