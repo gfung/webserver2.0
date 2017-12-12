@@ -5,16 +5,16 @@
 import * as spdy from 'spdy'
 import App from './app';
 import * as fs from 'fs';
-import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
-import * as socketIO from 'socket.io';
-const socketRoutes = require('./routing/sockets/socketRoutes');
+// import * as socketIO from 'socket.io';
+// const socketRoutes = require('./routing/sockets/socketRoutes');
 /**
  *  vars
  */
 const options = {
 	key: fs.readFileSync('./config/server.key', 'utf8'),
 	cert: fs.readFileSync('./config/server.crt', 'utf8'),
+	passphrase: "fuzz",
 	// **optional** SPDY-specific options
 	spdy: {
 		protocols: ['h2', 'spdy/3.1', 'http/1.1'],
@@ -91,15 +91,6 @@ function onListening(): void {
 /**
  * logic
  */
-
-//Connect to Mongo
-mongoose.connect('mongodb://localhost/http2test', { useMongoClient: true });
-mongoose.connection.on('error', function () {
-	console.error('Could not connect to MongoDB');
-});
-
-// setup socket on server.
-socketRoutes.make(server)
 
 //set port
 App.set('port', port);
