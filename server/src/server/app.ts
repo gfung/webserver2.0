@@ -56,6 +56,10 @@ class App {
 			res.status(200).sendFile(path.join(__dirname,'public/index.html'))
 		})
 
+		router.get('/healthz', (req, res, next) => {
+			res.status(200).send()
+		})
+
 		// all other routes not designated
 		router.get('*', (req, res, next) => {
 			res
