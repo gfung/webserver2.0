@@ -1,6 +1,5 @@
 .vscode/
 server/config/
-dist/
 server/.editorconfig
 server/node_modules/
 server/nodemon.json
